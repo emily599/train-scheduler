@@ -1,0 +1,10 @@
+body {
+    font-family: 'Quicksand', sans-serif;
+}
+.jumbotronBackground {
+    background-image: url("thomas.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  
+}
