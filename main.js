@@ -26,7 +26,7 @@ $(".submit").on("click", function (event) {
     destinationValue = $("#destinationInput").val().trim();
     trainTimeValue = $("#trainTimeInput").val().trim();
     frequencyValue = $("#frequencyInput").val().trim();
-
+    console.log(trainTimeValue);
     database.ref().push({
         trainName: trainNameValue,
         destination: destinationValue,
@@ -42,12 +42,19 @@ database.ref().on("child_added", function (childSnapshot) {
     console.log(childSnapshot.val());
 
     var momentCalc = moment();
+    // momentCalc2 = moment(momentCalc, "HH:mm");
+    // console.log("moment calc: " + momentCalc);
     var firstTimeCalc = childSnapshot.val().firstTrainTime;
-    var diffHours = momentCalc.diff(firstTimeCalc, "hours");
-    var conversion = diffHours * 60;
-    var minutesLeft = conversion % childSnapshot.val().frequency;
-
-    var nextArrival = minutesLeft + moment();
+    firstTimeCalc = moment(firstTimeCalc, "HH:mm");
+    // console.log("first time: " + firstTimeCalc);
+    var diffHours = momentCalc.diff(firstTimeCalc, "minutes");
+    // console.log("diff hours: " + diffHours);
+    // var conversion = diffHours * 60;
+    // console.log("conversion: " + conversion);
+    var minutesLeft = diffHours % childSnapshot.val().frequency;
+    // console.log("frquency: " + childSnapshot.val().frequency);
+    // console.log("minutesleft: " + minutesLeft);
+    var nextArrival = moment().add(minutesLeft, 'minutes').format("HH:mm");;
 
 
 
